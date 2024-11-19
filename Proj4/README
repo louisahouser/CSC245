@@ -1,0 +1,112 @@
+Problem Description:
+
+	Given a file from keyboard input, present the user with the alphabetically sorted vertices. Then, the user should enter the starting vertex, and a dijkstra
+summary table should be printed based on that said vertex. After the table is printed, cycle detection should occur and let the user know if a cyle occurs in the 
+graph.
+
+-----------------------------------------------------------------------------------------------------------
+
+Specification:
+	
+	The client program uses the vector, algorithm, sstream, iomanip, fstream, cstdlib, string, Graph, classes. There are many public methods of which include, 
+buildGraph (which builds the graph based on the three vectors - to, from, dist, which are passed by value), sortAndPrint (which calls on the buildGraph function, 
+and sorts the vertices returned by that function in alphabetical order before printing them), and dijkstraTable (which reads through the file and first assigns each
+vertex their distance as well as their previous vertex based off of the starting vertex, and then after all distances have been assigned, it finds the smallest 
+dist until the table is finished). There are also the other public functions that are purely used for string radix sort. 
+
+-----------------------------------------------------------------------------------------------------------
+
+Client Algorithm:
+
+	The client algorithm can be split into four sections. The first section is the prototypes for all of the functions called on by the main or by another 
+function. The second section is the main, where four parallel vectors are initialized, user is asked starting vertex, and functions are called to build the graph, 
+sort and print the vertices, run dijkstra's algorithm on the graph, print the dijkstra table, and then lastly cycle detection and printing the result. The third 
+section is the functions that handle everything but sorting. The fourth section is the radix-sort-on-string functions.
+
+-----------------------------------------------------------------------------------------------------------
+
+Graph Class:
+	
+	The graph class has one constructor that when called sets the number of vertices to 0, and the max to 50, as well as calls on the ClearMarks function which
+sets all of the marks to false (nothing has been visited yet). There is also a constructor that allows a parameter of int maxV that specifies the max number of 
+vertices allowed. There are then 10 other functions that build the graph by AddEdge and AddVertex, as well as allow access of the graph through WeightIs, 
+GetToVertices, IndexIs, IsEmpty, IsFull, and IsMarked. The graph class is called on by the client program.
+
+-----------------------------------------------------------------------------------------------------------
+
+	______ ADJACENCY MATRIX ______ 
+	______________________________
+
+	   | 1 | 2 | 3 | 4 | 5 | 6 | 7 
+	-------------------------------
+	 1 | 0 | 2 | 0 | 1 | 0 | 0 | 0 
+	-------------------------------
+	 2 | 0 | 0 | 0 | 3 |10 | 0 | 0 
+	-------------------------------
+	 3 | 4 | 0 | 0 | 0 | 0 | 5 | 0 
+	-------------------------------
+	 4 | 0 | 0 | 2 | 0 | 2 | 8 | 4 
+	-------------------------------
+	 5 | 0 | 0 | 0 | 0 | 0 | 0 | 6 
+	-------------------------------
+	 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 
+	-------------------------------
+	 7 | 0 | 0 | 0 | 0 | 0 | 1 | 0
+
+-----------------------------------------------------------------------------------------------------------
+
+STEP-BY-STEP:
+
+1. Assign starting vertex (V3)
+2. Set starting vertex to marked true, dist is 0, and previous is N/A
+3. Find what starting vertex can reach (V3's children)
+	a. V3: can reach V1 w/ weight of 4
+	       can reach V6 w/ weight of 5
+4. Assign adjacent vertices their distances, as well as assign the starting vertex as their previous. Keep in mind adding previous distance as well
+5. Find the smallest distance of the adjacent and then repeat step 3, 4, and 5 until all vertices have been set distances and previous locations. 
+	a. V3: V1 has smallest distance of 4
+	b. V1: can reach V2 w/ weight of 2 --> dist: 6
+	       can reach V4 w/ weight of 1 --> dist: 5
+	c. current vertices that do not have distances: V5 and V7
+	d. V1: V4 has smallest distance of 5
+	e. V4: can reach V6 w/ weight of 8 (8 is not smaller than current distance 5 so it does not become the new previous or new distance)
+	       can reach V3 w/ weight of 2 (starting vertex)
+	       can reach V5 w/ weight of 2 --> dist: 7
+	       can reach V7 w/ weight of 4 --> dist: 9
+	f. current distances and vertices:
+		i. V3: N/A
+		   V1: 4
+		   V6: 5
+		   V2: 6
+		   V4: 5
+		   V5: 7
+		   V7: 9
+6. Get greedy! Find the smallest distances that are not marked yet and set them as marked as we go through
+	a. V1 is set at marked as T1 (as V3 was T0 since it was starting vertex)
+	b. V6 and V4 have the same weight so we pick one
+		i. V6 is set marked as T2
+	c. V4 is set as T3 and is set marked to true
+	d. V2 is set as T4 and is set marked to true
+	e. V5 is set as T5 and is set marked to true
+	f. V7 is set as T6 and is set marked to true
+7. All done! A shortest path has now been found for starting at V3.
+
+-----------------------------------------------------------------------------------------------------------
+
+If it had been V1:
+	a. V1 can reach V2 w/ weight of 2
+	   V1 can reach V4 w/ weight of 1
+	b. V4 can reach V6 w/ weight of 8 --> dist: 9
+	   V4 can reach V3 w/ weight of 2 --> dist: 3
+	   V4 can reach V5 w/ weight of 2 --> dist: 3
+	   V4 can reach V7 w/ weight of 4 --> dist: 5
+	c. V4 is set as T1 and is marked as true
+	   V2 is set as T2 and is marked as true
+	   V3 is set as T3 and is marked as true
+	   V5 is set as T4 and is marked as true
+	   V7 is set as T5 and is marked as true
+	   V6 is set as T6 and is marked as true
+
+
+
+	
