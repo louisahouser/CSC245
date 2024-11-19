@@ -1,0 +1,60 @@
+1. The goal or problem solved by your client program.
+
+	The goal of the client program is to be able to take in input, either letter or number, and parse through it. The goal of parsing through the input is to be able to take the numbers as input to a calculator, and the letters and special characters as input for operators of a calculator. Furthermore, we are parsing 
+through the input to be able to follow the order numbers or characters are given. The goal of the whole project is to create a post-fix calculator, so our client 
+program is working to handle any special cases the calculator might encounter.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. A clear specification of all input and output used by client program.
+
+	The input used by the client program is each line the user enters. The line will be taken in using getline(cin,s) so that we can take in whitespaces, as 
+well as so the input will be taken in as a whole. That is the only input the client program uses, however, the input continues so long as <CNTL-D> is not entered. 
+
+	The output used by the client program is through the use of the PrintStack function, the PrintAndPopTop function, and the PrintTop function. Respectively, 
+the functions will output the stack, output the top of the stack and then pop it, and output the top of the stack. No output is 'used' in the sense of the word that it is taken in by the client program, it is only 'used' in that the functions described above provide output to the user. 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. What classes are used by this program? What are the attributes of these classes? What operations can objects of these classes perform?
+
+	The classes used by this program are cstdlib, cctype, and stack. The attributes and operations of each class are described below:
+
+	cstdlib: This class is a library of functions that allow searching, sorting, converting, and other number and memory handling. The only operation used in 
+		 this program is the atoi() function which converts a string to an integer. Other operations the class has includes, atol(), atof(), rand(), 
+		 srand(), free(), realloc(), abort(), atexit(), bsearch(), qsort(), abs(), and div().
+		
+
+	cctype: This class contains functions that allow programmer to handle characters and Strings in c++. The following operations help with parsing through 
+		strings, which was my purpose in using them for this program. Though I only used isalpha(), isspace(), and isdigit(), the class also has the 
+		following operations that objects of these classes can perform: isalnum(), isblank(), iscontrl(), islower()isprint(), ispunct(), isupper(), 
+		isxdigit(), tolower(), and toupper().
+
+	stack: The class contains functions to be able to manipulate a stack, as well as create one. The operations used by my program include push(), pop(), top(), 		   makeEmpty(), and isEmpty().
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4. A step by step outline of the algorithm used by your client program. In your algorithm, you should mention each of the calculator specifications that will 
+behandled.
+
+	My client program starts by creating a stack object named s. Then, there is a large do while loop that encapsulates the entirety of my algorithm, that ends when there is no longer any input (when <CNTL-D> is pressed). Within the loop there is a large try catch block that also encapsulates my algorithm, with the catch 
+exceptions being lack of input (DataError), dividing by zero (DivisionByZero), trying to pop an empty stack (Underflow), and having a full stack (Overflow). Within the try block is my getline statement that takes the line of input and places it within the string named myInput. 
+
+	Next is a for loop that runs through the size of the myInput string. For each loop, a boolean named negative is initialized, two strings named operators and numbers are initilialized, and an integer named ascii is initialized and set to the ascii code value of myInput[i]. These variables are set within the for loop so that they will reset or change at each loop as a new character of myInput is being conditioned. After these variables there is a if statement to set the boolean 
+named negative to true if the current character is '_', which is the marker for a number being negative. 
+
+	Next is a large if-else-if block (within the for loop still) that checks if the character is a letter and adds it to the operators string, if it is a letter and adds it to the numbers string and then pushes it to the stack, if it is a space and continues through the program, or if it is a specific ascii value and then adds it to operators. Within the first if-else statement, the one that adds to numbers, there are several specifications that are handled. The first to be handled 
+is if negative was set to true. If it was then the negative symbol gets added to the numbers string and negative is then set to false so the next number will not be flagged as negative as well. Next, the current character is added to the numbers string, and then a while statement within a if statement runs that will account 
+for if the calculator is given a number that is not single digit. The while loop will run so long as the next character is also a number, and the if statement only runs so long as there are still characters after the current one. After the if and while loop, the numbers string is converted to an integer and placed in a 
+variable named num. The num variable is then pushed to the stack. 
+
+	After the if-else-if block, a for loop will run that will iterate through the operators string and check if the character matches a specific letter, and 
+then if it does it will call a function. Within this for loop but after the condition is checked, operators will be shorten to no longer include the letter it just checked, moving to a new letter to compare our conditions to.
+
+	Now the end of the initial for loop has been met. Within the try block but outside of the for loop are two if statements to throw DataError and 
+DivisionByzero.  	
+
+	Outside of my main, there are the prototypes for the functions called by main, as well as the definitions of each function at the bottom of the program. 
+These will print the stack, print the top of the stack, duplicate the top element, clear the stack, etc.
+
+
