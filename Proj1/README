@@ -1,0 +1,22 @@
+1. The attributes of the DList class and why templates are being used
+   - The DList class has a class constructor, a deconstructor, eight public functions, three private functions, a private pointer named head, and a private length variable;
+   - Templates are being used because they allow for doubly linked lists of different data types to be created in the client file. Furthermore, using templates allows our code to remain clean and easy to follow by making it verstatile and not hard coded to a specific paramter. Not to mention, we definitely need the practice.
+
+2. A description of each of the operations of the DList class
+   - isEmpty iterates through the list and returns a boolean that indicates where the list is empty or not.
+   - inList iterates through the list and returns a boolean that indicates whether the item specified is in the list or not.
+   - makeEmpty is called when the deconstructor runs (which is when our object goes out of scope), and sets the head pointer to NULL as well as deallocating all of the memory being used by the list.
+   - insertHead creates a new pointer of NodeType<ItemType> that will be set to the head and then reassign the 'next' and 'back' nodes of each node surrounding the head
+   - appendTail creates two new pointers of NodeType<ItemType> that will allow for the location of the previous tail to be kept while also appending the new tail to the list.
+   - print simply prints the list in the order it currently is in.
+   - lengthIs iterates through the list and returns the number of items.
+   - deleteItem calls on the deleteLocation function 
+   - last is a private function that will return the last node in the list at that current time
+   - location is a private function that will return the location of an inputted item or NULL if not found
+   - deleteLocation is a private function that will delete the given ptr, taking into consideration special cases of deleting head, deleting tail, and deleting a list with only one item. 
+
+3. The role of the Move to the Front Algorithm
+   - The role of the Move to the Front Algorithm is to be able to sort the doubly linked list in a way that accomadates the user rather than one that sorts chronologically or numerically. Furthermore, it allows the items in the list to be much more accessible than if we needed to sort through the list a number of times to get to the desired order of elements. 
+
+4. A description of the main algorithm followed by the client program
+   - The implementation file, dlist.cpp, has two structs followed by the public and private functions that can be called on by the client program. The implementation and specification files allow the code to be kept more discrete and simple for the user, only showing them what they need to see. It will have two immutable functions, and the rest will mutate the list. The client program will present the user with options, with the program only ending when they choose that specific option. Furthermore, it will only have one list initialized, which will be made empty when the program comes to an end and the object goes out of scope.
